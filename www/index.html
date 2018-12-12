@@ -48,60 +48,23 @@
 
         <section>
             <h3>Bestehende Docker-Container</h3>
-            <table class="table table-hover">
+            <table id="container-table" class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Erstellt am</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Bearbeiten</th>
+                        <th style="width: 10%;" scope="col">#</th>
+                        <th style="width: 18%;" scope="col">Name</th>
+                        <th style="width: 18%;" scope="col">ID</th>
+                        <th style="width: 18%;" scope="col">Status</th>
+                        <th style="width: 18%;" scope="col">Image</th>
+                        <th style="width: 18%;" scope="col">Bearbeiten</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <th>Test</th>
-                        <th>ad6d5d32576a</th>
-                        <th>11.12.2018 20:15</th>
-                        <th>Online</th>
-                        <th>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button type="button" class="btn btn-default" onclick="handleDuplicateButton(1);">
-                                    <span class="glyphicon glyphicon-duplicate"></span>
-                                </button>
-                                <button type="button" class="btn btn-default" onclick="handleDeleteButton(1);">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <th>Test</th>
-                        <th>ad6d5d32576a</th>
-                        <th>11.12.2018 20:15</th>
-                        <th>Online</th>
-                        <th>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button type="button" class="btn btn-default" onclick="handleDuplicateButton(1);">
-                                    <span class="glyphicon glyphicon-duplicate"></span>
-                                </button>
-                                <button type="button" class="btn btn-default" onclick="handleDeleteButton(2);">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </div>
-                        </th>
-                    </tr>
                 </tbody>
             </table>
+            <button type="button" class="btn btn-default" onclick="fetchTableData();">
+                <span class="glyphicon glyphicon-refresh"></span> Aktualisieren
+            </button>
         </section>
     </div>
 

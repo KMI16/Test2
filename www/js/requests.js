@@ -1,12 +1,17 @@
-var baseURL = 'http://www.robatsky-dev.de/api/containers';
+var baseURL = 'http://127.0.0.1:8000/api/containers';
 
-var handleDeleteButton = function (dockerID) {
-    deleteRequest(dockerID);
-    postRequest(dockerID);
+var fetchTableData = function() {
+    getRequest("");
 }
 
+var handleDeleteButton = function (dockerID) {
+//    deleteRequest(dockerID);
+//    postRequest(dockerID);
+}
+
+
 var handleDuplicateButton = function (dockerID) {
-    getRequest(dockerID);
+    getRequest('/' + dockerID);
 }
 
 var deleteRequest = function (dockerID) {
@@ -16,11 +21,59 @@ var deleteRequest = function (dockerID) {
     });
 }
 
-var getRequest = function (dockerID) {
-    var url = baseURL + '/' + dockerID;
+var getRequest = function (url) {
+    var url = baseURL + url;
     sendRequest(url, 'GET', null, null, function (http) {
-        console.log(http.responseText);
+        var containers = JSON.parse(http.responseText).containers;
+        var table = document.getElementById('container-table').getElementsByTagName('tbody')[0];
+        
+        // clear table 
+        table.innerHTML = null;        
+        
+        for(var i = 0; i < containers.length; i++) {
+            console.log(containers[i].id);
+            
+            var tr = document.createElement('tr');
+
+            var numberCol = document.createElement('td');
+            numberCol.innerHTML = (i+1);
+            tr.appendChild(numberCol);
+
+            for(var prop in containers[i]) {
+                var td = document.createElement('td');
+                td.innerHTML = containers[i][prop];
+                tr.appendChild(td);
+            }
+
+            var buttonCol = document.createElement('td');
+            buttonCol.innerHTML = createButtonRow(i);
+            tr.appendChild(buttonCol);
+            
+            table.appendChild(tr);
+        }
     });
+}
+
+var createButtonRow = function(i) {
+    // var div = document.createElement('div');
+    // div.className += " btn-group";
+
+    // var btnPencil = document.createElement('button');
+
+
+    
+    return '<div class="btn-group" role="group" aria-label="...">' + 
+                                '<button type="button" class="btn btn-default">' + 
+                                    '<span class="glyphicon glyphicon-pencil"></span>' + 
+                                '</button>' + 
+                               ' <button type="button" class="btn btn-default" onclick="handleDuplicateButton(1);">' + 
+                                    '<span class="glyphicon glyphicon-duplicate"></span>' + 
+                                '</button>' + 
+                                '<button type="button" class="btn btn-default" onclick="handleDeleteButton(1);">' + 
+                                    '<span class="glyphicon glyphicon-trash"></span>' + 
+                                '</button>' + 
+                            '</div>';
+
 }
 
 var postRequest = function (dockerID) {
@@ -33,7 +86,6 @@ var postRequest = function (dockerID) {
         console.log(http.responseText);
     });
 }
-
 
 
 var sendRequest = function (url, operation, params, contentType, callback) {
